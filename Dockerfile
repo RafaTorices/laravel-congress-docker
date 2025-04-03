@@ -7,9 +7,9 @@ WORKDIR /var/www/html
 # Copy files app
 COPY src .
 # Copy the Laravel configuration file
-COPY src/.env.example .env
+COPY ./.env .env
 # Copy the Apache configuration file
-COPY apache_config/keep-app-apache.conf /etc/apache2/sites-available/000-default.conf
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
