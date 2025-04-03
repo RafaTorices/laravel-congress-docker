@@ -1,0 +1,30 @@
+# Docker Compose to run the application in a local environment
+services:
+  # Database container
+  laravel-congress-db:
+    image: mysql:8.0
+    container_name: laravel-congress-db
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - laravel-congress-network
+  laravel-congress-app:
+    depends_on:
+      - laravel-congress-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-congress-app
+    networks:
+      - laravel-congress-network
+    ports:
+      - "8100:80"
+
+networks:
+  laravel-congress-network:
+    driver: bridge
